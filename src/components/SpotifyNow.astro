@@ -1,0 +1,62 @@
+---
+const LASTFM_API_KEY = "b4e1ec8033f8b4b3a53a7ff39c9ea8be";
+const LASTFM_USER = "dimerenz";
+
+const res = await fetch(
+  `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USER}&api_key=${LASTFM_API_KEY}&limit=1&format=json`,
+);
+
+let track = null;
+let isNowPlaying = false;
+
+if (res.ok) {
+  const data = await res.json();
+  const recentTrack = data?.recenttracks?.track?.[0];
+  if (recentTrack) {
+    isNowPlaying = recentTrack["@attr"]?.nowplaying === "true";
+    track = {
+      name: recentTrack.name,
+      artist: recentTrack.artist["#text"],
+      album: recentTrack.album["#text"],
+      image: recentTrack.image?.find((img) => img.size === "medium")?.["#text"] || "",
+      url: recentTrack.url,
+    };
+  }
+}
+---
+
+<section id="music-now" class="max-w-4xl mx-auto px-6 py-24 reveal">
+  <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 flex items-center gap-5">
+    <div class="flex-shrink-0">
+      <svg class="w-10 h-10 text-green-500" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.28c-.24.36-.66.48-1.02.24l-2.82-1.68c-.78-.48-1.32-1.38-1.32-2.28v-5.7c0-.3.24-.54.54-.54s.54.24.54.54v5.7c0 .48.24.9.66 1.14l2.82 1.68c.36.18.48.66.24 1.02zm-2.28-6.36c-.18 0-.36-.06-.48-.18-.3-.24-.36-.66-.12-.96l3-3.6c.24-.3.66-.36.96-.12.3.24.36.66.12.96l-3 3.6c-.12.18-.3.3-.48.3z"/>
+      </svg>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="text-xs font-semibold uppercase tracking-wider text-green-600 dark:text-green-400 mb-1">
+        {isNowPlaying ? "Now Playing" : "Recently Played"}
+      </div>
+      {track ? (
+        <div class="flex items-center gap-4">
+          {track.image && (
+            <img src={track.image} alt={track.album} class="w-12 h-12 rounded object-cover flex-shrink-0" loading="lazy" />
+          )}
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">{track.name}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{track.artist}</p>
+          </div>
+        </div>
+      ) : (
+        <p class="text-sm text-gray-500 dark:text-gray-400">No recent tracks</p>
+      )}
+    </div>
+    <a
+      href="https://www.last.fm/user/{LASTFM_USER}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex-shrink-0 text-xs text-gray-400 dark:text-gray-500 hover:text-green-500 transition"
+    >
+      Last.fm
+    </a>
+  </div>
+</section>
