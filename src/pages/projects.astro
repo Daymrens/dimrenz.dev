@@ -7,50 +7,72 @@ const repos = [
     name: "BEERNEST-",
     desc: "A beer-themed project built with CSS",
     lang: "CSS",
+    color: "blue",
     url: "https://github.com/Daymrens/BEERNEST-",
   },
   {
     name: "LendWUs",
     desc: "Flutter-based lending app",
     lang: "Dart",
+    color: "cyan",
     url: "https://github.com/Daymrens/LendWUs",
   },
   {
     name: "POS-SYSTEM-C-FINAL-PROJECT",
-    desc: "Point of Sale system in C#",
+    desc: "Point of Sale system built with C#",
     lang: "C#",
+    color: "purple",
     url: "https://github.com/Daymrens/POS-SYSTEM-C-FINAL-PROJECT-2nd-Year-",
   },
   {
     name: "Dime-Renz---Portfolio",
-    desc: "Previous portfolio version",
+    desc: "Previous portfolio version (v1)",
     lang: "HTML",
+    color: "green",
     url: "https://github.com/Daymrens/Dime-Renz---Portfolio",
   },
 ];
+
+const langColors = {
+  blue: "border-blue-500/30 hover:border-blue-400 group-hover:shadow-blue-500/10",
+  cyan: "border-cyan-500/30 hover:border-cyan-400 group-hover:shadow-cyan-500/10",
+  purple: "border-purple-500/30 hover:border-purple-400 group-hover:shadow-purple-500/10",
+  green: "border-green-500/30 hover:border-green-400 group-hover:shadow-green-500/10",
+};
+
+const langDots = {
+  blue: "bg-blue-400",
+  cyan: "bg-cyan-400",
+  purple: "bg-purple-400",
+  green: "bg-green-400",
+};
 ---
 
 <Layout title="Projects">
   <Nav />
   <main class="min-h-screen pt-24 pb-16 px-6">
     <div class="max-w-4xl mx-auto">
-      <h1 class="text-4xl font-bold mb-2">Projects</h1>
+      <h1 class="text-4xl font-bold mb-2 font-display">Projects</h1>
       <p class="text-gray-400 mb-10">Things I've built and contributed to.</p>
-      <div class="grid gap-6">
-        {repos.map((r) => (
+      <div class="grid gap-6 md:grid-cols-2">
+        {repos.map((r, i) => (
           <a
             href={r.url}
             target="_blank"
-            class="block border border-gray-800 rounded-xl p-6 hover:border-blue-500/50 hover:bg-gray-900/50 transition-all"
+            class={`group reveal block border rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 ${langColors[r.color]}`}
+            style={`animation-delay: ${i * 100}ms`}
           >
             <div class="flex items-start justify-between gap-4">
-              <div>
-                <h2 class="text-xl font-semibold text-white mb-1">{r.name}</h2>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class={`w-2.5 h-2.5 rounded-full ${langDots[r.color]}`}></span>
+                  <h2 class="text-xl font-semibold text-white group-hover:text-blue-300 transition-colors">{r.name}</h2>
+                </div>
                 <p class="text-gray-400 text-sm">{r.desc}</p>
               </div>
-              <span class="shrink-0 text-xs font-mono text-blue-400 bg-blue-500/10 rounded-full px-3 py-1">{r.lang}</span>
+              <span class="shrink-0 text-xs font-mono text-gray-400 bg-gray-800 rounded-full px-3 py-1 group-hover:bg-gray-700 transition-colors">{r.lang}</span>
             </div>
-          </a>
+  </a>
         ))}
       </div>
     </div>
