@@ -1,0 +1,35 @@
+---
+const socials = [
+  { label: "GitHub", href: "https://github.com/Daymrens" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/Dime Renz Apor/" },
+  { label: "YouTube", href: "https://www.youtube.com/@dimerenz" },
+  { label: "Facebook", href: "https://facebook.com/daymrenss" },
+];
+---
+
+<section class="min-h-screen flex flex-col justify-center items-center px-6 text-center">
+  <div class="max-w-2xl">
+    <p class="text-blue-400 font-medium text-sm tracking-widest uppercase mb-4">CS Student & Developer</p>
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+      Dime Renz <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Apor</span>
+    </h1>
+    <p class="text-lg md:text-xl text-gray-400 leading-relaxed mb-8">
+      BSCS at Asian College of Technology.<br />
+      Building software, making music, and always learning.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      {socials.map((s) => (
+        <a
+          href={s.href}
+          target="_blank"
+          class="px-5 py-2.5 rounded-full border border-gray-700 text-sm font-medium text-gray-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all"
+        >
+          {s.label}
+        </a>
+      ))}
+    </div>
+  </div>
+  <div class="absolute bottom-10 animate-bounce text-gray-600">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+  </div>
+</section>
