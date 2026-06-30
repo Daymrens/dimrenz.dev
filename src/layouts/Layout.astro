@@ -1,5 +1,16 @@
 ---
 import '../styles/global.css';
+
+const { title, description, image } = Astro.props as {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+const siteTitle = title ? `${title} | Dime Renz Apor` : "dimrenz.dev | Dime Renz Apor";
+const siteDesc = description ?? "Dime Renz Apor — Aspiring developer, building software and making music.";
+const siteImage = image ?? "https://dimrenz.vercel.app/favicon.svg";
+const canonical = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -9,14 +20,35 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Dime Renz Apor — CS Student, Developer, Musician" />
-    <title>{Astro.props.title ?? "dimrenz.dev"} | Dime Renz Apor</title>
+    <meta name="description" content={siteDesc} />
+    <title>{siteTitle}</title>
+
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDesc} />
+    <meta property="og:image" content={siteImage} />
+    <meta property="og:url" content={`https://dimrenz.vercel.app${canonical}`} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDesc} />
+    <meta name="twitter:image" content={siteImage} />
+    <link rel="alternate" type="application/rss+xml" title="dimrenz.dev" href="/rss.xml" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-gray-950 text-gray-100 font-body antialiased">
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-body antialiased transition-colors">
     <slot />
+
+    <button
+      id="scroll-top"
+      class="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full border border-gray-700 bg-gray-900 dark:bg-gray-900 text-gray-400 hover:text-white hover:border-blue-500 transition-all duration-300 opacity-0 invisible translate-y-4"
+      aria-label="Scroll to top"
+    >
+      <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7m0 0l7 7"/></svg>
+    </button>
+
     <script>
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -30,6 +62,35 @@ import '../styles/global.css';
       document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
       });
+
+      const scrollBtn = document.getElementById('scroll-top');
+      if (scrollBtn) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 400) {
+            scrollBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+            scrollBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+          } else {
+            scrollBtn.classList.add('opacity-0', 'invisible', 'translate-y-4');
+            scrollBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+          }
+        });
+        scrollBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') {
+        html.classList.remove('dark');
+      } else if (saved === 'dark') {
+        html.classList.add('dark');
+      } else {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          html.classList.add('dark');
+        }
+      }
     </script>
   </body>
 </html>

@@ -22,16 +22,16 @@ const instruments = [
 ];
 ---
 
-<section id="music" class="py-24 px-6">
+<section id="music" class="py-24 px-6 bg-gray-50 dark:bg-transparent">
   <div class="max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold text-center mb-2 font-display reveal">Music</h2>
-    <p class="text-gray-400 text-center mb-12 reveal animate-delay-100">
+    <h2 class="text-3xl font-bold text-center mb-2 font-display text-gray-900 dark:text-white reveal">Music</h2>
+    <p class="text-gray-500 dark:text-gray-400 text-center mb-12 reveal animate-delay-100">
       Code and chords — two sides of the same creative coin.
     </p>
 
     <div class="flex flex-wrap justify-center gap-2 mb-10 reveal animate-delay-200">
       {instruments.map((inst) => (
-        <span class="px-4 py-2 border border-gray-700 rounded-full text-sm text-gray-300">{inst}</span>
+        <span class="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-full text-sm text-gray-600 dark:text-gray-300">{inst}</span>
       ))}
     </div>
 
@@ -40,14 +40,14 @@ const instruments = [
         <a
           href={m.url}
           target="_blank"
-          class="reveal group block border border-gray-800 rounded-xl p-6 hover:-translate-y-1 transition-all duration-300"
+          class="reveal group block border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:-translate-y-1 transition-all duration-300 bg-white dark:bg-transparent"
           style={`animation-delay: ${i * 100}ms`}
         >
           <div class={`w-10 h-10 rounded-lg bg-gradient-to-br ${m.color} flex items-center justify-center mb-3`}>
             <span class="text-white font-bold text-xs">{m.title[0]}</span>
           </div>
-          <h3 class="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">{m.title}</h3>
-          <p class="text-sm text-gray-400 mt-1">{m.desc}</p>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors">{m.title}</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{m.desc}</p>
         </a>
       ))}
     </div>
