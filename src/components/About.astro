@@ -1,0 +1,37 @@
+---
+const highlights = [
+  { label: "Course", value: "BSCS" },
+  { label: "School", value: "Asian College of Technology" },
+  { label: "Focus", value: "Software Development" },
+  { label: "Music", value: "Guitar / Vocals" },
+];
+---
+
+<section id="about" class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12 font-display reveal">About Me</h2>
+    <div class="grid md:grid-cols-5 gap-8 items-center">
+      <div class="md:col-span-2 flex justify-center reveal animate-delay-100">
+        <div class="w-48 h-48 md:w-56 md:h-56 rounded-full border-2 border-gray-800 flex items-center justify-center bg-gradient-to-br from-blue-500/10 to-purple-500/10 overflow-hidden">
+          <span class="text-6xl font-display font-bold text-gray-600">D</span>
+        </div>
+      </div>
+      <div class="md:col-span-3 reveal animate-delay-200">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          I'm a Computer Science student at Asian College of Technology who loves
+          building things — from POS systems in C# to Flutter apps and web
+          interfaces. When I'm not coding, I'm making music and exploring new
+          tools.
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          {highlights.map((h) => (
+            <div class="border border-gray-800 rounded-lg p-3">
+              <p class="text-xs text-gray-500 uppercase tracking-wider">{h.label}</p>
+              <p class="text-sm font-medium text-white mt-0.5">{h.value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
